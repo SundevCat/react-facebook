@@ -1,7 +1,10 @@
 .container {
-    background-color: #18191a;
     min-width: 100%;
 
+}
+
+.navicon:hover{
+    background-color: #262727;
 }
 
 .iconimg {
