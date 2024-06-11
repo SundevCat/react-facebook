@@ -58,7 +58,9 @@ function Navbar() {
                     <a className=" rounded-full bg-gray-500 p-2.5 mr-2 " style={{ backgroundColor: "#3e3e3e" }}>
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style={{ color: "#B0B3B8" }}><path d="M3 9.5a9 9 0 1 1 18 0v2.927c0 1.69.475 3.345 1.37 4.778a1.5 1.5 0 0 1-1.272 2.295h-4.625a4.5 4.5 0 0 1-8.946 0H2.902a1.5 1.5 0 0 1-1.272-2.295A9.01 9.01 0 0 0 3 12.43V9.5zm6.55 10a2.5 2.5 0 0 0 4.9 0h-4.9z"></path></svg>
                     </a>
-                    <img className=" w-full rounded-full" src={'https://scontent.fbkk8-2.fna.fbcdn.net/v/t39.30808-1/241234262_4426341154119759_2493545022860712627_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFpx8XYUcpV4lHP_pXH-dNNBF2xvxN3r94EXbG_E3ev3vRypoVpwmEcD3VtnmerfwoMBCW0yHsZpog2gNNVLaTX&_nc_ohc=nEcOXyw8oDIQ7kNvgG5UabZ&_nc_ht=scontent.fbkk8-2.fna&oh=00_AYBnJnqKJdXMmMJT0rvaokdxxHVM6cctqMJ-JRxtKCQLIw&oe=6660B97D'} />
+                    <Link>
+                        <img className=" w-full rounded-full" src={'https://scontent.fbkk8-2.fna.fbcdn.net/v/t39.30808-1/241234262_4426341154119759_2493545022860712627_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFpx8XYUcpV4lHP_pXH-dNNBF2xvxN3r94EXbG_E3ev3vRypoVpwmEcD3VtnmerfwoMBCW0yHsZpog2gNNVLaTX&_nc_ohc=nEcOXyw8oDIQ7kNvgG5UabZ&_nc_ht=scontent.fbkk8-2.fna&oh=00_AYBnJnqKJdXMmMJT0rvaokdxxHVM6cctqMJ-JRxtKCQLIw&oe=6660B97D+1'} />
+                    </Link>
                 </div>
             </div>
         </div>
