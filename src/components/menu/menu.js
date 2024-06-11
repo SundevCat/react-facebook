@@ -16,7 +16,7 @@ import Gift from "../../assets/giftbox.png"
 import VideoGame from "../../assets/folder.png"
 import Climate from "../../assets/climate.png"
 import Msg from "../../assets/messenger.png"
-
+import Blank from "../../assets/blank-profile.png"
 
 import { Link } from "react-router-dom";
 import React,{ useState } from "react";
@@ -29,7 +29,7 @@ function Menu() {
             <div className="flex w-full flex-col mt-4">
                 <Link to={'/'} id="border" className={'p-2  mx-2 my-1  ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
                     <div className=" w-8 h-8">
-                        <img className=" w-full  rounded-full" src={'https://scontent.fbkk8-2.fna.fbcdn.net/v/t39.30808-1/241234262_4426341154119759_2493545022860712627_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFpx8XYUcpV4lHP_pXH-dNNBF2xvxN3r94EXbG_E3ev3vRypoVpwmEcD3VtnmerfwoMBCW0yHsZpog2gNNVLaTX&_nc_ohc=nEcOXyw8oDIQ7kNvgG5UabZ&_nc_ht=scontent.fbkk8-2.fna&oh=00_AYBnJnqKJdXMmMJT0rvaokdxxHVM6cctqMJ-JRxtKCQLIw&oe=6660B97D'} />
+                        <img className=" w-full  rounded-full" src={Blank} />
                     </div>
                     <div className="px-4 text-white text-sm"> My Facebook React</div>
                 </Link>

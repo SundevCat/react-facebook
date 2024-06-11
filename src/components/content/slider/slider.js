@@ -5,13 +5,10 @@ import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 
 function NextArrow(props) {
     const { className, style, onClick } = props;
-    const nextClass = ['bg-black',
-        'text-white']
-
-
     return (
         <div
-            className={` ${className}`}
+            className={` right-0 z-10 before:text-4xl before:content-['→'] ${className}`}
+            style={style}
             onClick={onClick}
         />
     );
@@ -21,7 +18,8 @@ function PrevArrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={` ${className}`}
+            className={` left-0 z-10 before:text-4xl before:content-['←']  ${className}`}
+            style={style}
             onClick={onClick}
         />
     );
@@ -35,7 +33,7 @@ function SliderStory() {
         slidesToShow: 4,
         slidesToScroll: 2,
         nextArrow: <NextArrow />,
-        prevarrow: <PrevArrow />
+        prevArrow: <PrevArrow />
     };
     return (
         <Slider {...settings}>
