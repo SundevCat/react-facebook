@@ -17,6 +17,7 @@ import VideoGame from "../../assets/folder.png"
 import Climate from "../../assets/climate.png"
 import Msg from "../../assets/messenger.png"
 import Blank from "../../assets/blank-profile.png"
+import User from "../../data/dummy.json"
 
 import { Link } from "react-router-dom";
 import React,{ useState } from "react";
@@ -31,7 +32,7 @@ function Menu() {
                     <div className=" w-8 h-8">
                         <img className=" w-full  rounded-full" src={Blank} />
                     </div>
-                    <div className="px-4 text-white text-sm"> My Facebook React</div>
+                    <div className="px-4 text-white text-sm"> {User[0].name}</div>
                 </Link>
                 <Link to={'/'} id="border" className={'p-2 mx-2 my-1 ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
                     <img className="w-8 h-8" src={Friend} />

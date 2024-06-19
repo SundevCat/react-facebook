@@ -1,6 +1,5 @@
 import "./chat.css"
 import Gift from "../../assets/giftbox.png"
-import Blank from "../../assets/blank-profile.png"
 import User from "../../data/dummy.json"
 
 import { Link } from "react-router-dom";
@@ -33,7 +32,7 @@ function Chat() {
                     {
                         User.map((data, i) =>
                             <Link key={i} className="flex pl-4 py-2 justify-start items-center  hover:bg-zinc-700 hover:rounded-md">
-                                <img className="w-8 h-8 rounded-full" src={Blank} />
+                                <img className="w-8 h-8 rounded-full" src={`/assets/${data.main_image}`} />
                                 <div className=" pl-4 text-white"> {data.name}</div>
                             </Link>
                         )
