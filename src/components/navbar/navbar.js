@@ -75,7 +75,7 @@ function Navbar() {
 
                         {/* </button> */}
 
-                        <Dropdown renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full" src={Blank} alt="dropdown" />}>
+                        <Dropdown className=" bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md" renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full" src={Blank} alt="dropdown" />}>
                             <Dropdown.Header>
                                 <span className="block text-sm">Bonnie Green</span>
                                 <span className="block truncate text-sm font-medium">bonnie@flowbite.com</span>
@@ -86,8 +86,6 @@ function Navbar() {
                             <Dropdown.Divider />
                             <Dropdown.Item icon={HiLogout} onClick={(e) => { logout(e) }}>Sign out</Dropdown.Item>
                         </Dropdown>
-
-
                     </Link>
                 </div>
             </div>
