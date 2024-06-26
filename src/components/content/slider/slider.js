@@ -1,9 +1,9 @@
 import './slider.css'
-import React from "react";
+import React, { useContext } from "react";
 import Slider from "react-slick";
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
-import User from "../../../data/dummy.json"
 import { Link } from 'react-router-dom';
+import { DataContext } from '../../../App';
 
 function NextArrow(props) {
     const { className, style, onClick } = props;
@@ -28,6 +28,8 @@ function PrevArrow(props) {
 }
 
 function SliderStory() {
+
+    const user = useContext(DataContext)
     var settings = {
         draggable: false,
         infinite: false,
@@ -52,7 +54,7 @@ function SliderStory() {
                     </div>
                 </div>
             </div>
-            {User.slice(0, 4).map((data, key) =>
+            {user.slice(0, 4).map((data, key) =>
 
                 <Link className=" h-64" key={key}>
                     <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center h-full w-11/12">

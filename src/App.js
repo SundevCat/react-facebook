@@ -5,7 +5,10 @@ import Home from './home';
 import Chat from './components/chat/chat';
 import Content from './components/content/content';
 import Menu from './components/menu/menu';
-import { useState } from 'react';
+import { useState, createContext } from 'react';
+import Data from "./data/dummy.json"
+
+export const DataContext = createContext();
 
 function App() {
   let [components, setComponents] = useState()
@@ -16,14 +19,16 @@ function App() {
   }
   return (
     <div>
-      <Navbar />
-      {components}
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/menu' element={<Menu />} />
-        <Route path='/content' element={<Content />} />
-        <Route path='/chat' element={<Chat />} />
-      </Routes>
+      <DataContext.Provider value={Data}>
+        <Navbar />
+        {components}
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/menu' element={<Menu />} />
+          <Route path='/content' element={<Content />} />
+          <Route path='/chat' element={<Chat />} />
+        </Routes>
+      </DataContext.Provider>
     </div>
   );
 }

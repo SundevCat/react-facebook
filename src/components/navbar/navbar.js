@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './navbar.css'
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Blank from "../../assets/blank-profile.png"
+import { DataContext } from "../../App";
 
 function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
-
+    const user = useContext(DataContext)
     return (
         <div className="container bg-zinc-800 fixed top-0 z-10">
             <div className="flex justify-between">
