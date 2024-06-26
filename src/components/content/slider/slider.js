@@ -42,12 +42,12 @@ function SliderStory() {
     return (
         <Slider {...settings}>
             <div className=" h-64">
-                <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center h-full w-11/12">
+                <div className="block rounded-lg  shadow-lg bg-neutral-700 text-center h-full w-11/12">
                     <div className=" h-5/6">
                         <div className=' h-full overflow-hidden rounded-t-lg'>
                             <img className="object-cover h-full object-center aspect-square hover:scale-105 transition-all " src="https://tecdn.b-cdn.net/img/new/standard/nature/184.jpg" alt="story one" />
                         </div>
-                        <AddCircleSharpIcon className="plus text-blue-600 dark:bg-neutral-700 rounded-full -translate-y-5 " />
+                        <AddCircleSharpIcon className="plus text-blue-600 bg-neutral-700 rounded-full -translate-y-5 " />
                     </div>
                     <div className="p-4 text-white">
                         สร้างสตอรี่
@@ -57,7 +57,7 @@ function SliderStory() {
             {user.slice(0, 4).map((data, key) =>
 
                 <Link className=" h-64" key={key}>
-                    <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-700 text-center h-full w-11/12">
+                    <div className="block rounded-lg  shadow-lg bg-neutral-700 text-center h-full w-11/12">
                         <div className=' h-full overflow-hidden rounded-lg relative'>
                             <img className=" absolute object-cover h-full z-0 object-center aspect-square hover:scale-105 transition-all " src={`/assets/${data.story}`} />
                             <div className="p-4 text-white z-10 relative flex">

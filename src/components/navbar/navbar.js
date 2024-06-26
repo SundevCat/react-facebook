@@ -3,10 +3,17 @@ import './navbar.css'
 import { Link } from "react-router-dom";
 import Blank from "../../assets/blank-profile.png"
 import { DataContext } from "../../App";
-
+import { Dropdown } from "flowbite-react";
+import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
+import { useAuth } from "../../Contexts/AuthContext";
 function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
     const user = useContext(DataContext)
+    const userAuth = useAuth()
+    function logout(e) {
+        userAuth.setIsLoggedIn(false)
+        userAuth.setAuthUser(null)
+    }
     return (
         <div className="container bg-zinc-800 fixed top-0 z-10">
             <div className="flex justify-between">
@@ -62,7 +69,25 @@ function Navbar() {
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style={{ color: "#B0B3B8" }}><path d="M3 9.5a9 9 0 1 1 18 0v2.927c0 1.69.475 3.345 1.37 4.778a1.5 1.5 0 0 1-1.272 2.295h-4.625a4.5 4.5 0 0 1-8.946 0H2.902a1.5 1.5 0 0 1-1.272-2.295A9.01 9.01 0 0 0 3 12.43V9.5zm6.55 10a2.5 2.5 0 0 0 4.9 0h-4.9z"></path></svg>
                     </a>
                     <Link>
-                        <img className=" w-10 h-10 p-0 rounded-full" src={Blank} />
+
+
+                        {/* <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"> */}
+
+                        {/* </button> */}
+
+                        <Dropdown renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full" src={Blank} alt="dropdown" />}>
+                            <Dropdown.Header>
+                                <span className="block text-sm">Bonnie Green</span>
+                                <span className="block truncate text-sm font-medium">bonnie@flowbite.com</span>
+                            </Dropdown.Header>
+                            <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
+                            <Dropdown.Item icon={HiCog}>Settings</Dropdown.Item>
+                            <Dropdown.Item icon={HiCurrencyDollar}>Earnings</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Item icon={HiLogout} onClick={(e) => { logout(e) }}>Sign out</Dropdown.Item>
+                        </Dropdown>
+
+
                     </Link>
                 </div>
             </div>

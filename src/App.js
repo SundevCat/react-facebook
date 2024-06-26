@@ -27,7 +27,7 @@ function App() {
       {userAuth.isLoggedIn ? (
         <DataContext.Provider value={Data}>
           <Navbar />
-          {components}
+          {/* {components} */}
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/menu' element={<Menu />} />
