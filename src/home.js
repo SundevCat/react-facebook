@@ -1,8 +1,10 @@
 import Chat from './components/chat/chat';
 import Content from './components/content/content';
 import Menu from './components/menu/menu';
-import React,{ useState } from "react";
+
+
 function Home() {
+
     return (
         <div className=" relative flex">
             <div className="hidden xl:block w-[22.22%] fixed left-0 top-14 -z-0">

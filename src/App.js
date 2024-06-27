@@ -7,8 +7,9 @@ import Content from './components/content/content';
 import Menu from './components/menu/menu';
 import { useState, createContext, useContext } from 'react';
 import Data from "./data/dummy.json"
-import { AuthContext, AuthProvider, useAuth } from './Contexts/AuthContext';
+import { useAuth } from './Contexts/AuthContext';
 import Login from './components/loginSignup/login/login';
+import Signup from './components/loginSignup/signup/signup';
 export const DataContext = createContext();
 
 
@@ -35,9 +36,16 @@ function App() {
             <Route path='/chat' element={<Chat />} />
           </Routes>
         </DataContext.Provider>
-      ) : (<Login />)}
-      {/* {isLoggedIn ? (<span> User name: {authUser.Name}</span>) : ''} */}
-    </div>
+      ) : (
+        <DataContext.Provider value={Data}>
+          <Routes>
+            <Route path='/' element={<Login />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+          </Routes>
+        </DataContext.Provider>
+      )}
+    </div >
   );
 }
 
