@@ -54,7 +54,7 @@ function SliderStory() {
                     </div>
                 </div>
             </div>
-            {user.slice(0, 4).map((data, key) =>
+            {/* {user.slice(0, 4).map((data, key) =>
 
                 <Link className=" h-64" key={key}>
                     <div className="block rounded-lg  shadow-lg bg-neutral-700 text-center h-full w-11/12">
@@ -67,7 +67,7 @@ function SliderStory() {
                         </div>
                     </div>
                 </Link>
-            )}
+            )} */}
         </Slider>
     );
 }

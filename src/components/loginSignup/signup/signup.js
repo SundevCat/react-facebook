@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import bcrypt from "bcryptjs"
+import Cookies from "universal-cookie";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 function Signup() {
     const navigate = useNavigate();
+    const cookies = new Cookies()
     const date = new Date();
     const monthName = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
     const day = []
@@ -14,6 +17,10 @@ function Signup() {
     const [currentMonth, setCurrentMonth] = useState(monthName[date.getMonth()]);
     const [currentYear, setCurrentYear] = useState(date.getFullYear());
     const [customGenders, setCustomGenders] = useState(null);
+    const {
+        setAuthUser,
+        setIsLoggedIn
+    } = useAuth()
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -25,11 +32,10 @@ function Signup() {
             password: e.target.password.value,
             image: '',
             story: '',
-            statusLogin: 0,
             userGender: customGenders,
             userDate: e.target.day.value + e.target.month.value + e.target.year.value,
         }
-        console.log(inputValue);
+        // console.log(inputValue);
         if (customGenders === "custom") {
             inputValue.userGender = e.target.more_genders.value
         }
@@ -62,14 +68,21 @@ function Signup() {
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
                     body: JSON.stringify(inputValue)
-                })
+                }).then((res) => { return res.json() }).then((data) => { return data })
                 console.log(res);
-                if (res.status === 200) {
+                if (res.length !== 1) {
+                    setIsLoggedIn(true)
                     setStatusRegis(true)
+                    setAuthUser({
+                        id: res._id,
+                        Name: res.userName
+                    })
+                    cookies.set('isloggedin', true, { path: '/' })
+                    cookies.set('_id', { id: res._id, Name: res.userName }, { path: '/' })
                     setTimeout(() => {
-                        navigate('/login')
+                        navigate('/')
                     }, 2000)
-                } else if (res.status === 404) {
+                } else {
                     validationErrors.userEmail = "อีเมลนี้ถูกใช้แล้ว"
                 }
             } catch (err) {

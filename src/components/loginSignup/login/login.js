@@ -2,14 +2,14 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../../Contexts/AuthContext"
 import { useState } from "react"
 import bcrypt from "bcryptjs"
+import Cookies from "universal-cookie"
 
 function Login() {
+  const cookies = new Cookies()
   const navigate = useNavigate()
   const [emailError, setEmailError] = useState(false)
   const {
-    authUser,
     setAuthUser,
-    isLoggedIn,
     setIsLoggedIn
   } = useAuth()
 
@@ -32,16 +32,31 @@ function Login() {
         }
         return res.json()
       }).then((data) => {
-        bcrypt.compare(body.password, data.password, (err, isMatch) => {
+        bcrypt.compare(body.password, data.password, async (err, isMatch) => {
           if (err) {
             console.log(err);
           } else if (!isMatch) {
             setEmailError(true)
           } else {
             setEmailError(false)
-            console.log(data);
-            // navigate('/')
-            // setIsLoggedIn(true)
+            try {
+              let res = await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + data._id, {
+                method: 'GET',
+                headers: { 'content-type': 'application/json' },
+              }).then((res) => { return res.json() }).then((data) => { return data })
+              // navigate('/')
+              console.log(res);
+              setIsLoggedIn(true)
+              setAuthUser({
+                id: res._id,
+                Name: res.userName
+            })
+              cookies.set('isloggedin', true, { path: '/' })
+              cookies.set('_id', { id: res._id, Name: res.userName }, { path: '/' })
+            }
+            catch (err) {
+              console.log('status err: ' + err);
+            }
           }
         })
       }).catch((err) => console.log(err))
@@ -50,12 +65,9 @@ function Login() {
 
 
     } catch (err) {
-      console.log(err);
+      console.log('login error: ' + err);
     }
 
-    setAuthUser({
-      Name: 'John Doe'
-    })
   }
 
   return (

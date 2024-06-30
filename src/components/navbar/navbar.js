@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './navbar.css'
 import { Link } from "react-router-dom";
 import Blank from "../../assets/blank-profile.png"
@@ -8,8 +8,28 @@ import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import { useAuth } from "../../Contexts/AuthContext";
 function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
-    const user = useContext(DataContext)
+    const [user, setUser] = useState(null);
     const userAuth = useAuth()
+
+    useEffect(() => {
+        try {
+            fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
+                method: 'GET',
+                headers: { 'content-type': 'application/json' }
+            })
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    setUser(data)
+                    return data
+                })
+        } catch (err) {
+            console.log(err);
+        }
+    }, [])
+
+    console.log(user);
     function logout(e) {
         userAuth.setIsLoggedIn(false)
         userAuth.setAuthUser(null)
@@ -68,12 +88,29 @@ function Navbar() {
                     <a className=" rounded-full bg-gray-500 p-2.5 mr-2 " style={{ backgroundColor: "#3e3e3e" }}>
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style={{ color: "#B0B3B8" }}><path d="M3 9.5a9 9 0 1 1 18 0v2.927c0 1.69.475 3.345 1.37 4.778a1.5 1.5 0 0 1-1.272 2.295h-4.625a4.5 4.5 0 0 1-8.946 0H2.902a1.5 1.5 0 0 1-1.272-2.295A9.01 9.01 0 0 0 3 12.43V9.5zm6.55 10a2.5 2.5 0 0 0 4.9 0h-4.9z"></path></svg>
                     </a>
-                    <Link>
+                    <div>
+
+
 
                         <Dropdown className=" bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md" renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full" src={Blank} alt="dropdown" />}>
+
+
                             <Dropdown.Header>
-                                <span className="block text-sm">{user[0].name}</span>
-                                <span className="block truncate text-sm font-medium">{user[0].email}</span>
+                                {user === null ?
+                                    <>
+                                        <div>
+                                            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-16 my-2"></div>
+                                        </div>
+                                        <div>
+                                            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-20 mb-2"></div>
+                                        </div>
+                                    </>
+                                    :
+                                    <>
+                                        <span className="block text-sm">{user.userName}</span>
+                                        <span className="block truncate text-sm font-medium">{user.userEmail}</span>
+                                    </>
+                                }
                             </Dropdown.Header>
                             <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
                             <Dropdown.Item icon={HiCog}>Settings</Dropdown.Item>
@@ -81,7 +118,8 @@ function Navbar() {
                             <Dropdown.Divider />
                             <Dropdown.Item icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'\login'}>Sign out</Link></Dropdown.Item>
                         </Dropdown>
-                    </Link>
+
+                    </div>
                 </div>
             </div>
         </div>
