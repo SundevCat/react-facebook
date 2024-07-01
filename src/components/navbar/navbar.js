@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './navbar.css'
 import { Link } from "react-router-dom";
 import Blank from "../../assets/blank-profile.png"
-import { DataContext } from "../../App";
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import { useAuth } from "../../Contexts/AuthContext";
@@ -92,10 +91,10 @@ function Navbar() {
 
 
 
-                        <Dropdown className=" bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md" renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full" src={Blank} alt="dropdown" />}>
+                        <Dropdown className=" w-48 bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md " renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full hover:cursor-pointer" src={Blank} alt="dropdown" />}>
 
 
-                            <Dropdown.Header>
+                            <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2">
                                 {user === null ?
                                     <>
                                         <div>
@@ -106,17 +105,25 @@ function Navbar() {
                                         </div>
                                     </>
                                     :
-                                    <>
-                                        <span className="block text-sm">{user.userName}</span>
-                                        <span className="block truncate text-sm font-medium">{user.userEmail}</span>
-                                    </>
+                                    <Link className="flex" to={'/profile'}>
+                                        <img className="w-8 h-8 rounded-full" alt="" src={Blank} />
+                                        <span className="flex items-center text-sm  px-3">{user.userName}</span>
+                                    </Link>
                                 }
                             </Dropdown.Header>
-                            <Dropdown.Item icon={HiViewGrid}>Dashboard</Dropdown.Item>
-                            <Dropdown.Item icon={HiCog}>Settings</Dropdown.Item>
-                            <Dropdown.Item icon={HiCurrencyDollar}>Earnings</Dropdown.Item>
+                            <li className="m-2">
+                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog}>Settings</Dropdown.Item>
+                            </li>
+                            <li className="m-2">
+                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiViewGrid}>Help & Support</Dropdown.Item>
+                            </li>
+                            <li className="m-2">
+                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
+                            </li>
                             <Dropdown.Divider />
-                            <Dropdown.Item icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'\login'}>Sign out</Link></Dropdown.Item>
+                            <li className="m-2">
+                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
+                            </li>
                         </Dropdown>
 
                     </div>

@@ -206,7 +206,7 @@ function Signup() {
                             }
                         </button>
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300 flex">
-                            <Link to={'/login'} className="ms-auto  m-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
+                            <Link to={'/'} className="ms-auto  m-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
                                 มีบัญชีแล้วใช่ไหม
                             </Link>
                         </div>

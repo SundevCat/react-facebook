@@ -30,7 +30,7 @@ function Menu() {
     return (
         <div className={checkURL === '/menu' ? ' menu bg-zinc-900 mt-14' : 'menu h-dvh bg-zinc-900 pr-2 overflow-hidden hover:overflow-auto hover:pr-0'}>
             <div className="flex w-full flex-col mt-4">
-                <Link to={'/'} id="border" className={'p-2  mx-2 my-1  ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
+                <Link to={'/profile'} id="border" className={'p-2  mx-2 my-1  ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
                     <div className=" w-8 h-8">
                         <img alt="" className=" w-full  rounded-full" src={Blank}  />
                     </div>
