@@ -6,7 +6,6 @@ import Chat from './components/chat/chat';
 import Content from './components/content/content';
 import Menu from './components/menu/menu';
 import { useState, createContext } from 'react';
-import Data from "./data/dummy.json"
 import { useAuth } from './Contexts/AuthContext';
 import Login from './components/loginSignup/login/login';
 import Signup from './components/loginSignup/signup/signup';

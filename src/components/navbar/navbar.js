@@ -11,30 +11,34 @@ function Navbar() {
     const userAuth = useAuth()
 
     useEffect(() => {
-        try {
-            fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
-                method: 'GET',
-                headers: { 'content-type': 'application/json' }
-            })
-                .then((res) => {
-                    return res.json()
+        if (userAuth.authUser == null) {
+            try {
+
+                fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
+                    method: 'GET',
+                    headers: { 'content-type': 'application/json' }
                 })
-                .then((data) => {
-                    setUser(data)
-                    return data
-                })
-        } catch (err) {
-            console.log(err);
+                    .then((res) => {
+                        return res.json()
+                    })
+                    .then((data) => {
+                        setUser(data)
+                        return data
+                    })
+
+            } catch (err) {
+                console.log(err);
+            }
         }
     }, [])
 
-    console.log(user);
+    // console.log(user);
     function logout(e) {
         userAuth.setIsLoggedIn(false)
         userAuth.setAuthUser(null)
     }
     return (
-        <div className="container bg-zinc-800 fixed top-0 z-10">
+        <div className="container bg-zinc-800 fixed top-0 z-50">
             <div className="flex justify-between">
                 <div className="contain-left flex items-center" >
                     <Link to={'/'} >
@@ -92,10 +96,8 @@ function Navbar() {
 
 
                         <Dropdown className=" w-48 bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md " renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full hover:cursor-pointer" src={Blank} alt="dropdown" />}>
-
-
                             <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2">
-                                {user === null ?
+                                {userAuth.authUser === null ?
                                     <>
                                         <div>
                                             <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-16 my-2"></div>
@@ -107,7 +109,7 @@ function Navbar() {
                                     :
                                     <Link className="flex" to={'/profile'}>
                                         <img className="w-8 h-8 rounded-full" alt="" src={Blank} />
-                                        <span className="flex items-center text-sm  px-3">{user.userName}</span>
+                                        <span className="flex items-center text-sm  px-3">{userAuth.authUser.Name}</span>
                                     </Link>
                                 }
                             </Dropdown.Header>
