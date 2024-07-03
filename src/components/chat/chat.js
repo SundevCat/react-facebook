@@ -24,8 +24,9 @@ function Chat() {
                 .then((data) => {
                     setReady(true)
                     setUsers(data)
+                }).catch((err) => {
+                    console.log(err);
                 })
-
         } catch (err) {
             console.log(err);
         }

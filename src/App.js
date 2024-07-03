@@ -11,6 +11,7 @@ import Login from './components/loginSignup/login/login';
 import Signup from './components/loginSignup/signup/signup';
 import Cookies from 'universal-cookie';
 import Profile from './components/Profile/Profile';
+import Notfound from './components/404NotFound/Notfound';
 export const DataContext = createContext();
 
 
@@ -28,6 +29,7 @@ function App() {
             <Route path='/content' element={<Content />} />
             <Route path='/chat' element={<Chat />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/404' element={<Notfound />} />
           </Routes>
         </DataContext.Provider>
       ) : (
