@@ -7,11 +7,12 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../App";
 import { useAuth } from "../../Contexts/AuthContext";
+import { urlImg } from "../../function/UrlImg";
 
 function Chat() {
 
     const userAuth = useAuth()
-    const [users, setUsers] = useState({})
+    const [usersData, setUsersData] = useState({})
     const [ready, setReady] = useState(false)
 
     useEffect(() => {
@@ -23,7 +24,7 @@ function Chat() {
                 .then((res) => { return res.json() })
                 .then((data) => {
                     setReady(true)
-                    setUsers(data)
+                    setUsersData(data)
                 }).catch((err) => {
                     console.log(err);
                 })
@@ -86,7 +87,7 @@ function Chat() {
                     </div>
                     <Link className="flex px-4 py-2 justify-start items-center  hover:bg-zinc-700 hover:rounded-md">
                         <img className="w-8 h-8" src={Gift} />
-                        {ready && <div className=" px-2 text-white"> วันนี้เป็นวันเกิดของ {users[Math.floor(Math.random() * 10)].userName}</div>}
+                        {ready && <div className=" px-2 text-white"> วันนี้เป็นวันเกิดของ {usersData[Math.floor(Math.random() * 10)].userName}</div>}
                     </Link>
                     <div className="border-t w-11/12 mx-auto my-2  border-gray-600"></div>
                     <div className="flex justify-between px-4  ">
@@ -99,12 +100,17 @@ function Chat() {
                     <div>
                         {ready &&
                             <>{
-                                users.map((data, i) =>
-                                    <Link key={i} className="flex pl-4 py-2 justify-start items-center  hover:bg-zinc-700 hover:rounded-md">
-                                        <img className="w-8 h-8 rounded-full" src={Blank} />
-                                        <div className=" pl-4 text-white"> {data.userName}</div>
-                                    </Link>
-                                )
+                                usersData.map((data, i) => {
+                                    if (data.userName != userAuth.authUser.Name) {
+                                        return (
+                                            <Link key={i} className="flex pl-4 py-2 justify-start items-center  hover:bg-zinc-700 hover:rounded-md">
+                                                <img className="w-8 h-8 rounded-full" src={urlImg(data.image)} />
+                                                <div className=" pl-4 text-white"> {data.userName}</div>
+                                            </Link>
+                                        )
+                                    }
+
+                                })
                             }</>
                         }
                     </div>

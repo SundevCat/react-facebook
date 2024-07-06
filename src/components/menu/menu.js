@@ -18,21 +18,43 @@ import Msg from "../../assets/messenger.png"
 import Blank from "../../assets/blank-profile.png"
 
 import { Link } from "react-router-dom";
-import React,{ useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../App"
 import { useAuth } from "../../Contexts/AuthContext"
+import { urlImg } from "../../function/UrlImg"
 
 function Menu() {
     const [toggleMore, setToggleMore] = useState(false)
     const [checkURL, setCheckURL] = useState(window.location.pathname);
+    const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
+
+    useEffect(() => {
+        try {
+            fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
+                method: 'GET',
+                headers: { 'content-type': 'application/json' }
+            })
+                .then((res) => {
+                    return res.json()
+                })
+                .then((data) => {
+                    setUserData(data)
+                })
+
+        } catch (err) {
+            console.log(err);
+        }
+    }, [])
+
     // const user = useContext(DataContext)
     return (
         <div className={checkURL === '/menu' ? ' menu bg-zinc-900 mt-14' : 'menu h-dvh bg-zinc-900 pr-2 overflow-hidden hover:overflow-auto hover:pr-0'}>
             <div className="flex w-full flex-col mt-4">
                 <Link to={'/profile'} id="border" className={'p-2  mx-2 my-1  ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
-                    <div className=" w-8 h-8">
-                        <img alt="" className=" w-full  rounded-full" src={Blank}  />
+                    <div>
+                        {userData ? <img alt="" className="  w-9 h-9  rounded-full object-cover " src={urlImg(userData.image)} /> :''}
+                        
                     </div>
                     <div className="px-4 text-white text-sm"> {userAuth.authUser.Name}</div>
                 </Link>

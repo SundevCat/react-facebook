@@ -5,30 +5,27 @@ import Blank from "../../assets/blank-profile.png"
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import { useAuth } from "../../Contexts/AuthContext";
+import { urlImg } from "../../function/UrlImg";
 function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
-    const [user, setUser] = useState(null);
+    const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
 
     useEffect(() => {
-        if (userAuth.authUser == null) {
-            try {
-
-                fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
-                    method: 'GET',
-                    headers: { 'content-type': 'application/json' }
+        try {
+            fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
+                method: 'GET',
+                headers: { 'content-type': 'application/json' }
+            })
+                .then((res) => {
+                    return res.json()
                 })
-                    .then((res) => {
-                        return res.json()
-                    })
-                    .then((data) => {
-                        setUser(data)
-                        return data
-                    })
+                .then((data) => {
+                    setUserData(data)
+                })
 
-            } catch (err) {
-                console.log(err);
-            }
+        } catch (err) {
+            console.log(err);
         }
     }, [])
 
@@ -93,41 +90,40 @@ function Navbar() {
                     </a>
                     <div>
 
-
-
-                        <Dropdown className=" w-48 bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md " renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full hover:cursor-pointer" src={Blank} alt="dropdown" />}>
-                            <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2">
-                                {userAuth.authUser === null ?
-                                    <>
-                                        <div>
-                                            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-16 my-2"></div>
-                                        </div>
-                                        <div>
-                                            <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-20 mb-2"></div>
-                                        </div>
-                                    </>
-                                    :
-                                    <Link className="flex" to={'/profile'}>
-                                        <img className="w-8 h-8 rounded-full" alt="" src={Blank} />
-                                        <span className="flex items-center text-sm  px-3">{userAuth.authUser.Name}</span>
-                                    </Link>
-                                }
-                            </Dropdown.Header>
-                            <li className="m-2">
-                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog}>Settings</Dropdown.Item>
-                            </li>
-                            <li className="m-2">
-                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiViewGrid}>Help & Support</Dropdown.Item>
-                            </li>
-                            <li className="m-2">
-                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
-                            </li>
-                            <Dropdown.Divider />
-                            <li className="m-2">
-                                <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
-                            </li>
-                        </Dropdown>
-
+                        {userData ?
+                            <Dropdown className=" w-48 bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md " renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full hover:cursor-pointer object-cover" src={urlImg(userData.image)} alt="dropdown" />}>
+                                <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2">
+                                    {userAuth.authUser === null ?
+                                        <>
+                                            <div>
+                                                <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-16 my-2"></div>
+                                            </div>
+                                            <div>
+                                                <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-20 mb-2"></div>
+                                            </div>
+                                        </>
+                                        :
+                                        <Link className="flex" to={'/profile'}>
+                                            <img className="w-8 h-8 rounded-full object-cover" alt="" src={urlImg(userData.image)} />
+                                            <span className="flex items-center text-sm  px-3">{userAuth.authUser.Name}</span>
+                                        </Link>
+                                    }
+                                </Dropdown.Header>
+                                <li className="m-2">
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog}>Settings</Dropdown.Item>
+                                </li>
+                                <li className="m-2">
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiViewGrid}>Help & Support</Dropdown.Item>
+                                </li>
+                                <li className="m-2">
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
+                                </li>
+                                <Dropdown.Divider />
+                                <li className="m-2">
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
+                                </li>
+                            </Dropdown>
+                            : ''}
                     </div>
                 </div>
             </div>

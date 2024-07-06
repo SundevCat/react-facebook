@@ -30,7 +30,7 @@ function Signup() {
             userLastName: e.target.lastname.value,
             userEmail: e.target.email.value,
             password: e.target.password.value,
-            image: '',
+            image: 'blank.png',
             story: '',
             userGender: customGenders,
             userDate: e.target.day.value + e.target.month.value + e.target.year.value,
