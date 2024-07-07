@@ -17,7 +17,6 @@ export const DataContext = createContext();
 
 function App() {
   const userAuth = useAuth()
-  console.log(userAuth.authUser);
   return (
     <>
       {userAuth.isLoggedIn === true ? (

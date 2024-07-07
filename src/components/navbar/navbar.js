@@ -11,7 +11,8 @@ function Navbar() {
     const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
 
-    useEffect(() => {
+
+    async function fetchData() {
         try {
             fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
@@ -27,6 +28,9 @@ function Navbar() {
         } catch (err) {
             console.log(err);
         }
+    }
+    useEffect(() => {
+        fetchData()
     }, [])
 
     // console.log(user);

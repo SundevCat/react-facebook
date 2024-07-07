@@ -14,7 +14,8 @@ function Profile() {
   const [ready, setReady] = useState(false)
   const [userData, setUserData] = useState(null)
   const url = process.env.REACT_APP_API_IMAGE
-  useEffect(() => {
+
+  async function fetchData() {
     if (ready === false) {
       fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
         method: 'GET',
@@ -27,6 +28,9 @@ function Profile() {
         setReady(true)
       })
     }
+  }
+  useEffect(() => {
+    fetchData()
   }, [])
 
   function toggleModel(modal) {

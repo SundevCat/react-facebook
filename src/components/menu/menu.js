@@ -29,9 +29,9 @@ function Menu() {
     const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
 
-    useEffect(() => {
+    async function fetchData() {
         try {
-            fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
+            await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
                 headers: { 'content-type': 'application/json' }
             })
@@ -45,6 +45,9 @@ function Menu() {
         } catch (err) {
             console.log(err);
         }
+    }
+    useEffect(() => {
+        fetchData()
     }, [])
 
     // const user = useContext(DataContext)
@@ -53,8 +56,8 @@ function Menu() {
             <div className="flex w-full flex-col mt-4">
                 <Link to={'/profile'} id="border" className={'p-2  mx-2 my-1  ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
                     <div>
-                        {userData ? <img alt="" className="  w-9 h-9  rounded-full object-cover " src={urlImg(userData.image)} /> :''}
-                        
+                        {userData ? <img alt="" className="  w-9 h-9  rounded-full object-cover " src={urlImg(userData.image)} /> : ''}
+
                     </div>
                     <div className="px-4 text-white text-sm"> {userAuth.authUser.Name}</div>
                 </Link>

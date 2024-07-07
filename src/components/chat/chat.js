@@ -15,13 +15,14 @@ function Chat() {
     const [usersData, setUsersData] = useState({})
     const [ready, setReady] = useState(false)
 
-    useEffect(() => {
+    async function fetchData() {
+
         try {
-            fetch(process.env.REACT_APP_API_URL + 'users/', {
+            await fetch(process.env.REACT_APP_API_URL + 'users/', {
                 method: 'GET',
                 headers: { 'content-type': 'application/json' }
             })
-                .then((res) => { return res.json() })
+                .then((res) => res.json())
                 .then((data) => {
                     setReady(true)
                     setUsersData(data)
@@ -31,6 +32,10 @@ function Chat() {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    useEffect(() => {
+        fetchData();
     }, [])
 
 

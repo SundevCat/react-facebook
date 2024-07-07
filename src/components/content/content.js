@@ -10,7 +10,8 @@ function Content() {
     const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
 
-    useEffect(() => {
+    async function fetchData() {
+
         try {
             fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
@@ -26,6 +27,9 @@ function Content() {
         } catch (err) {
             console.log(err);
         }
+    }
+    useEffect(() => {
+        fetchData();
     }, [])
     return (
         <div className=" w-full pt-14 min-[900px]:w-3/4 xl:w-[55.56%] bg-zinc-900 mt-2 h-dvh xl:m-auto px-20">
