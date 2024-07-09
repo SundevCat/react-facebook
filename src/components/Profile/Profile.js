@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Blank from "../../assets/blank-profile.png"
 import { useAuth } from '../../Contexts/AuthContext'
-import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Modal } from 'flowbite-react';
 import ModalPic from './ModalPic/ModalPic';
-import { urlImg } from '../../function/UrlImg';
+import { urlCoverImg, urlImg } from '../../function/UrlImg';
 
 function Profile() {
   const userAuth = useAuth()
   const [openEditProfile, setOpenEditProfile] = useState(false);
   const [imgProfile, setImgProfile] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
   const [ready, setReady] = useState(false)
   const [userData, setUserData] = useState(null)
   const url = process.env.REACT_APP_API_IMAGE
@@ -25,6 +24,7 @@ function Profile() {
       }).then((res) => { return res.json() }).then((data) => {
         setUserData(data)
         setImgProfile(data.image)
+        setCoverImage(data.cover_photo)
         setReady(true)
       })
     }
@@ -76,12 +76,12 @@ function Profile() {
         <span className="sr-only">Loading...</span>
       </div>
         :
-        <div className='  bg-zinc-800 pt-14'>
+        <div className='  bg-zinc-800 pt-14 w-fit min-[1092px]:w-full'>
 
           <div className='flex justify-center '>
             <div className=' relative'>
               <div className='w-[1092px] h-[65dvh]'>
-                <img className=' w-full h-full object-cover rounded-b-md ' alt='banner' src='https://as2.ftcdn.net/v2/jpg/04/91/54/41/1000_F_491544123_4nVEtw3SHCCLOzuFb8jx5iErUnunLnDF.jpg' ></img>
+                <img className=' w-full h-full object-cover rounded-b-md ' alt='banner'   src={urlImg(userData.cover_photo)} ></img>
                 <div className='w-[95%] m-auto text-white flex justify-between' >
                   <div className='flex flex-row'>
                     <img className='rounded-full w-44 h-44 -mt-10 border-4 border-zinc-900 object-cover' src={urlImg(userData.image)} />
@@ -91,15 +91,9 @@ function Profile() {
                     </div>
                   </div>
                   <div className=' relative mt-auto'>
-                    {/* <button type="button" className="text-white bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                  <AddIcon fontSize='small' className='mr-1' />
-                  Add to story
-                </button> */}
                     <button type="button" onClick={() => toggleModel(true)} className="py-2 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-zinc-700 rounded-lg hover:bg-zinc-600   ">
                       <EditIcon fontSize='small' className='mr-1' />  Edit profile
                     </button>
-
-
                   </div>
                 </div>
               </div>
@@ -107,7 +101,7 @@ function Profile() {
           </div>
           <div className='h-[35dvh]'>
           </div>
-          <ModalPic toggleModel={toggleModel} openEditProfile={openEditProfile} img={imgProfile} />
+          <ModalPic toggleModel={toggleModel} openEditProfile={openEditProfile} img={imgProfile} coverImage={coverImage}/>
         </div>
       }
     </>

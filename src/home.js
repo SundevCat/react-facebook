@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Chat from './components/chat/chat';
 import Content from './components/content/content';
 import Menu from './components/menu/menu';
@@ -5,6 +6,9 @@ import Menu from './components/menu/menu';
 
 function Home() {
 
+    useEffect(()=>{
+        document.title="MY Facebook"
+    })
     return (
         <div className=" relative flex">
             <div className="hidden xl:block w-[22.22%] fixed left-0 top-14 -z-0">

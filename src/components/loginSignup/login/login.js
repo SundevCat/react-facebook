@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../../Contexts/AuthContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import bcrypt from "bcryptjs"
 import Cookies from "universal-cookie"
 
@@ -12,7 +12,9 @@ function Login() {
     setAuthUser,
     setIsLoggedIn
   } = useAuth()
-
+  useEffect(()=>{
+    document.title = "Login"
+  },[])
   async function login(e) {
     e.preventDefault()
     try {

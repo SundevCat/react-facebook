@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import bcrypt from "bcryptjs"
 import Cookies from "universal-cookie";
@@ -21,6 +21,10 @@ function Signup() {
         setAuthUser,
         setIsLoggedIn
     } = useAuth()
+
+    useEffect(()=>{
+        document.title = "signup"
+      },[])
 
     async function onSubmit(e) {
         e.preventDefault();

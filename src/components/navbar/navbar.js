@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './navbar.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Blank from "../../assets/blank-profile.png"
 import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
@@ -10,7 +10,7 @@ function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
     const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
-
+    const navigate = useNavigate()
 
     async function fetchData() {
         try {
@@ -113,19 +113,19 @@ function Navbar() {
                                         </Link>
                                     }
                                 </Dropdown.Header>
-                                <li className="m-2">
-                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog}>Settings</Dropdown.Item>
-                                </li>
-                                <li className="m-2">
+                                <ul className="m-2">
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog} onClick={() => { navigate('/setting') }}>Settings</Dropdown.Item>
+                                </ul>
+                                <ul className="m-2">
                                     <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiViewGrid}>Help & Support</Dropdown.Item>
-                                </li>
-                                <li className="m-2">
+                                </ul>
+                                <ul className="m-2">
                                     <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
-                                </li>
+                                </ul>
                                 <Dropdown.Divider />
-                                <li className="m-2">
+                                <ul className="m-2">
                                     <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
-                                </li>
+                                </ul>
                             </Dropdown>
                             : ''}
                     </div>
