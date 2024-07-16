@@ -33,9 +33,6 @@ function Profile() {
     fetchData()
   }, [])
 
-  function toggleModel(modal) {
-    setOpenEditProfile(modal)
-  }
   console.log(userData);
   return (
     <>
@@ -91,7 +88,7 @@ function Profile() {
                     </div>
                   </div>
                   <div className=' relative mt-auto'>
-                    <button type="button" onClick={() => toggleModel(true)} className="py-2 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-zinc-700 rounded-lg hover:bg-zinc-600   ">
+                    <button type="button" onClick={() => setOpenEditProfile(true)} className="py-2 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-zinc-700 rounded-lg hover:bg-zinc-600   ">
                       <EditIcon fontSize='small' className='mr-1' />  Edit profile
                     </button>
                   </div>
@@ -101,7 +98,7 @@ function Profile() {
           </div>
           <div className='h-[35dvh]'>
           </div>
-          <ModalPic toggleModel={toggleModel} openEditProfile={openEditProfile} img={imgProfile} coverImage={coverImage}/>
+          <ModalPic setOpenEditProfile={setOpenEditProfile} openEditProfile={openEditProfile} img={imgProfile} coverImage={coverImage}/>
         </div>
       }
     </>

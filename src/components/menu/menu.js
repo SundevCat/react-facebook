@@ -139,7 +139,7 @@ function Menu() {
                     <div className=" text-lg text-gray-400 mt-4"> ทางลัดของคุณ</div>
                 </div>
                 <Link to={'/'} id="border" className={'p-2 mx-2 my-1 ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
-                    <img alt="" className="w-8 h-8 rounded-lg object-cover" src={'https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/151969486_1525004901035359_340501406778812033_n.jpg?stp=c13.0.50.50a_cp0_dst-jpg_p50x50&_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGYRwm2eU98S-qA_z2osLvHWiUhk3bkSJZaJSGTduRIllh7KeVw2P_wy_zANoR6YWIHTridpZBcP1_5dUcoU2mF&_nc_ohc=ACDfdXkV7JwQ7kNvgG5Wt9z&_nc_ht=scontent.fbkk12-2.fna&oh=00_AYCNbQ88D15vS1Q4_VJ8KSL8zDh9oJKXF7v_MotX72NNiw&oe=668E000C'} />
+                    <img alt="" className="w-8 h-8 rounded-lg object-cover" src={Blank} />
                     <div className="px-4 text-white text-sm"> กลุ่มสำหรับคุณพ่อคุณแม่มือใหม่ </div>
                 </Link>
                 <Link to={'/'} id="border" className={'p-2 mx-2 my-1 ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
