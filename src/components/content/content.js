@@ -1,8 +1,6 @@
 import "./content.css"
 import Slide from './slider/slider'
-import Blank from '../../assets/blank-profile.png'
-import { useContext, useEffect, useState } from "react"
-import { DataContext } from "../../App"
+import { useEffect, useState } from "react"
 import { useAuth } from "../../Contexts/AuthContext"
 import { urlImg } from "../../function/UrlImg"
 import Posts from "./Posts/Posts"
@@ -47,13 +45,14 @@ function Content() {
                             <div onClick={() => setToggleModel(true)} className="flex rounded-3xl w-full ml-2 bg-zinc-700 relative  hover:bg-zinc-600 cursor-pointer"  >
                                 <div className="my-auto flex ml-3  text-gray-500">
                                     What's on you mind   {userData.userName}
-                                    <Posts toggleModal={toggleModel} userData={userData} setToggleModel={setToggleModel} />
                                 </div>
                             </div>
+                            <Posts toggleModal={toggleModel} userData={userData} setToggleModel={setToggleModel} />
                         </>}
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

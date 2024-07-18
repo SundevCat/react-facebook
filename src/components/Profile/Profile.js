@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Blank from "../../assets/blank-profile.png"
 import { useAuth } from '../../Contexts/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
 import ModalPic from './ModalPic/ModalPic';
-import { urlCoverImg, urlImg } from '../../function/UrlImg';
+import {  urlImg } from '../../function/UrlImg';
 
 function Profile() {
   const userAuth = useAuth()

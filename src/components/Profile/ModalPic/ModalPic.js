@@ -1,8 +1,6 @@
-import { Button, Modal } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import React, { useState } from 'react'
-import Blank from "../../../assets/blank-profile.png"
 import { useAuth } from '../../../Contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import { urlImg } from '../../../function/UrlImg';
 
 const ModalPic = (prop) => {
@@ -140,7 +138,7 @@ const ModalPic = (prop) => {
                                 </div>
                             </form>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </Modal>
 
@@ -158,7 +156,7 @@ const ModalPic = (prop) => {
                             <span className="sr-only">Close modal</span>
                         </button>
                     </div>
-                
+
                     <div className="p-4 md:p-5  flex">
                         <div className='w-3/4'>
                             {coverImage === "" || coverImage === null ? <img className=' w-80 m-auto h-40 object-cover' src={urlImg(prop.coverImage)} /> : <img className=' w-80 m-auto h-40 object-cover' src={coverImage} />}
