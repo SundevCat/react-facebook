@@ -1,19 +1,55 @@
 import { Modal } from 'flowbite-react'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { urlImg } from '../../../function/UrlImg';
-import { Public } from '@mui/icons-material';
-import { Input, InputLabel, TextField } from '@mui/material';
+import { Facebook, FacebookTwoTone, Public } from '@mui/icons-material';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+import { TextField } from '@mui/material';
+import EmojiPicker from 'emoji-picker-react';
+import photo from '../../../assets/Ivw7nhRtXyo.png'
 
 
 function Posts(prop) {
+    const [textField, setTextField] = useState('')
+    const [toggleEmojo, setToggleEmojo] = useState(false);
+    const modelRef = useRef()
 
+    useEffect(() => {
+        const handdleClickOutside = (e) => {
+            if (modelRef.current && !modelRef.current.contains(e.target)) {
+                setToggleEmojo(false)
+            }
+        }
+        document.addEventListener("mousedown", handdleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handdleClickOutside)
+        }
+    }, [])
 
-    const planholder = "What's on you mind, " + prop.userData.userName +" ?"
-    console.log(prop.userData);
+    const onPost = () => {
+        let formData = {
+            'postOwnnerID' :prop.userData._id,
+            'postImg':'',
+            'postText':textField,
+            'postComment':[]
+        }
+        console.log(prop.userData._id);
+        console.log(formData);
+        try {
+            fetch(process.env.REACT_APP_API_URL + 'posts/', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+
+        } catch (err) {
+
+        }
+    }
+    const planholder = "What's on you mind, " + prop.userData.userName + " ?"
     return (
 
-        <Modal show={prop.toggleModal} onClose={() => prop.setToggleModel(false)} style={{ backgroundColor: '#00000050' }} >
-            <div className="relative bg-zinc-800 rounded-lg  m-auto w-[500px] ">
+        <Modal show={prop.toggleModal} onClose={() => prop.setToggleModel(false)} style={{ backgroundColor: '#00000050' }}>
+            <div className="relative bg-zinc-800 rounded-lg  m-auto w-[500px] " >
                 <div className=" relative  p-4 md:p-5   dark:border-gray-600">
                     <h3 className="text-xl text-center  m-auto font-semibold text-white">
                         Create post
@@ -39,14 +75,16 @@ function Posts(prop) {
                         </div>
                     </div>
                     <TextField
+                        value={textField}
+                        onChange={(e) => setTextField(e.target.value)}
                         sx={
                             {
                                 '& .MuiInputBase-root': {
                                     color: 'white',
                                     paddingTop: '10px',
                                     paddingBottom: '50px',
-                                    paddingLeft:'5px',
-                                    paddingRight:'5px'
+                                    paddingLeft: '5px',
+                                    paddingRight: '5px'
                                 },
                                 '& .css-uhyr2s-MuiInputBase-root-MuiInput-root::before': {
                                     border: '0px',
@@ -69,6 +107,24 @@ function Posts(prop) {
                         multiline
                         id="standard-multiline-flexible"
                     />
+                    <div className='flex flex-row' ref={modelRef} >
+                        <button>
+                            <img src={photo}></img>
+                        </button>
+                        <button onClick={() => setToggleEmojo(!toggleEmojo)} className=' flex ml-auto'>
+                            <SentimentSatisfiedAltIcon style={{ color: 'gray' }} />
+                        </button>
+                        {toggleEmojo && <div className=' absolute top-0 right-6' >
+                            <EmojiPicker theme='dark' skinTonesDisabled={true} emojiStyle={Facebook} />
+                        </div>}
+                    </div>
+                    <div>
+                        {textField ?
+                            <button onClick={onPost} className=' w-full text-white bg-blue-700 hover:bg-blue-600  font-medium rounded-md my-2  py-1 text-center ' type='submi'> Post</button>
+                            :
+                            <button disabled className=' cursor-not-allowed w-full text-gray-400 bg-gray-500 font-medium rounded-md my-2  py-1 text-center ' type='submi'> Post</button>
+                        }
+                    </div>
                 </div>
             </div>
         </Modal>
