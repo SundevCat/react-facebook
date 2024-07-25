@@ -76,8 +76,8 @@ function Profile() {
 
           <div className='flex justify-center '>
             <div className=' relative'>
-              <div className='w-[1092px] h-[65dvh]'>
-                <img className=' w-full h-full object-cover rounded-b-md ' alt='banner'   src={urlImg(userData.cover_photo)} ></img>
+              <div className='h-[65dvh]'>
+                <img className='w-[1092px] h-full object-cover rounded-b-md ' alt='banner'   src={urlImg(userData.cover_photo)} ></img>
                 <div className='w-[95%] m-auto text-white flex justify-between' >
                   <div className='flex flex-row'>
                     <img className='rounded-full w-44 h-44 -mt-10 border-4 border-zinc-900 object-cover' src={urlImg(userData.image)} />

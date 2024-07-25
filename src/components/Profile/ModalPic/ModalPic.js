@@ -76,8 +76,8 @@ const ModalPic = (prop) => {
     return (
         <div>
             {/* modal edit profile */}
-            <Modal show={prop.openEditProfile} onClose={() => prop.setOpenEditProfile(false)} className=' bg-zinc-800 bg-opacity-70 pt-14'>
-                <div className="relative bg-zinc-800  rounded-lg ">
+            <Modal show={prop.openEditProfile} onClose={() => prop.setOpenEditProfile(false)} className=' bg-zinc-800 bg-opacity-70 pt-14 '>
+                <div className="relative bg-zinc-800  rounded-lg w-[500px] m-auto">
                     <div className=" relative  p-4 md:p-5 border-b  dark:border-gray-600">
                         <h3 className="text-xl text-center  m-auto font-semibold text-white">
                             Exit Profile

@@ -1,16 +1,18 @@
 import { Modal } from 'flowbite-react'
 import React, { useEffect, useRef, useState } from 'react'
 import { urlImg } from '../../../function/UrlImg';
-import { Facebook, FacebookTwoTone, Public } from '@mui/icons-material';
+import { Facebook, Public } from '@mui/icons-material';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import { TextField } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
 import photo from '../../../assets/Ivw7nhRtXyo.png'
+import { useNavigate } from 'react-router-dom';
 
 
 function Posts(prop) {
     const [textField, setTextField] = useState('')
     const [toggleEmojo, setToggleEmojo] = useState(false);
+    const navigate = useNavigate();
     const modelRef = useRef()
 
     useEffect(() => {
@@ -27,10 +29,10 @@ function Posts(prop) {
 
     const onPost = () => {
         let formData = {
-            'postOwnnerID' :prop.userData._id,
-            'postImg':'',
-            'postText':textField,
-            'postComment':[]
+            'postOwnnerID': prop.userData._id,
+            'postImg': '',
+            'postText': textField,
+            'postComment': []
         }
         console.log(prop.userData._id);
         console.log(formData);
@@ -39,6 +41,11 @@ function Posts(prop) {
                 method: 'POST',
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(formData)
+            }).then((res) => {
+                return res.json()
+
+            }).then((data) => {
+                window.location.reload()
             })
 
         } catch (err) {

@@ -96,7 +96,7 @@ function Navbar() {
 
                         {userData ?
                             <Dropdown className=" w-48 bg-zinc-800 text-white border-zinc-800 rounded-md shadow-md " renderTrigger={() => <img id="dropdownDefaultButton" data-dropdown-toggle="dropdown" className=" w-10 h-10 p-0 rounded-full hover:cursor-pointer object-cover" src={urlImg(userData.image)} alt="dropdown" />}>
-                                <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2">
+                                <Dropdown.Header className=" hover:bg-zinc-700 hover:rounded-md m-2 ">
                                     {userAuth.authUser === null ?
                                         <>
                                             <div>
@@ -109,22 +109,22 @@ function Navbar() {
                                         :
                                         <Link className="flex" to={'/profile'}>
                                             <img className="w-8 h-8 rounded-full object-cover" alt="" src={urlImg(userData.image)} />
-                                            <span className="flex items-center text-sm  px-3">{userAuth.authUser.Name}</span>
+                                            <span className="flex items-center text-sm  px-3 text-white" >{userAuth.authUser.Name}</span>
                                         </Link>
                                     }
                                 </Dropdown.Header>
                                 <ul className="m-2">
-                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCog} onClick={() => { navigate('/setting') }}>Settings</Dropdown.Item>
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md text-white" icon={HiCog} onClick={() => { navigate('/setting') }}>Settings</Dropdown.Item>
                                 </ul>
                                 <ul className="m-2">
-                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiViewGrid}>Help & Support</Dropdown.Item>
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md text-white" icon={HiViewGrid}>Help & Support</Dropdown.Item>
                                 </ul>
                                 <ul className="m-2">
-                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md text-white" icon={HiCurrencyDollar}>Give feedback</Dropdown.Item>
                                 </ul>
                                 <Dropdown.Divider />
                                 <ul className="m-2">
-                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
+                                    <Dropdown.Item className="py-2  hover:bg-zinc-700 hover:rounded-md text-white" icon={HiLogout} onClick={(e) => { logout(e) }}><Link to={'/'}>Log out</Link></Dropdown.Item>
                                 </ul>
                             </Dropdown>
                             : ''}

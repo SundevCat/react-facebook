@@ -4,13 +4,14 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../../Contexts/AuthContext"
 import { urlImg } from "../../function/UrlImg"
 import Posts from "./Posts/Posts"
+import BlockPost from "./BlockPost/BlockPost"
 
 function Content() {
     const [userData, setUserData] = useState(null);
     const [postList, SetPostList] = useState(null);
-    const [userPostList, SetUserPostList] = useState(null);
     const [toggleModel, setToggleModel] = useState(false)
     const userAuth = useAuth()
+    let postArr = []
 
     async function fetchData() {
         try {
@@ -32,7 +33,7 @@ function Content() {
 
     async function fetchPost() {
         try {
-            await fetch(process.env.REACT_APP_API_URL + 'posts/', {
+            SetPostList(await fetch(process.env.REACT_APP_API_URL + 'posts/', {
                 method: 'GET',
                 headers: { 'content-type': 'application/json' }
             })
@@ -40,36 +41,15 @@ function Content() {
                     return res.json()
                 })
                 .then((data) => {
-                    SetPostList(data)
-                    data.map((post) => {
-                        getUserPost(post.postOwnnerID)
-                    })
-
-                })
+                    return (data)
+                }))
 
         } catch (err) {
             console.log(err);
         }
     }
 
-    async function getUserPost(id) {
-        try {
-            await fetch(process.env.REACT_APP_API_URL + 'users/finduserpost/' + id, {
-                method: 'GET',
-                headers: { 'content-type': 'application/json' }
-            })
-                .then(async (res) => {
-                    return res.json()
-                })
-                .then((data) => {
-                    SetUserPostList(data)
-                    console.log(data);
-                })
 
-        } catch (err) {
-            console.log(err);
-        }
-    }
 
 
     useEffect(() => {
@@ -77,7 +57,7 @@ function Content() {
         fetchPost();
     }, [])
     return (
-        <div className=" w-full pt-14 min-[900px]:w-3/4 xl:w-[55.56%] bg-zinc-900 mt-2 h-dvh xl:m-auto px-20">
+        <div className=" w-full pt-14 min-[900px]:w-3/4 xl:w-[55.56%] bg-zinc-900 mt-2 min-h-dvh xl:m-auto px-20">
             <div className=" relative mt-10">
                 <Slide />
                 <div className="mt-5 h-24 bg-zinc-800 rounded-xl ">
@@ -93,30 +73,15 @@ function Content() {
                         </>}
                     </div>
                 </div>
-                <div className="mt-5 h-24 bg-zinc-800 rounded-xl ">
-                    <div className="mx-5 py-5 flex ">
+                {
+                    postList != null && <>
                         {
-                            postList && userPostList && <>
-                                {
-                                    postList.map((post, i) => {
-                                        return <div key={i}>
-                                            <img className="w-10 h-10 rounded-full object-cover" src={urlImg(userPostList.image)} />
-                                            <div className="flex flex-col rounded-3xl w-full ml-2 text-white"  >
-                                                {userPostList.userName}
-                                                <div className="my-auto text-xs flex font-semibold text-gray-500">
-                                                    public
-                                                </div>
-                                                <div className=" text-white">
-                                                    {post.postText}
-                                                </div>
-                                            </div>
-                                        </div>
+                            postList.map((post, i) => {
+                                return <BlockPost post={post} key={i} />
+                            })
+                        }
+                    </>}
 
-                                    })
-                                }
-                            </>}
-                    </div>
-                </div>
             </div>
         </div>
     )
