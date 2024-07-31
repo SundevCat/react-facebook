@@ -6,17 +6,19 @@ import { Dropdown } from "flowbite-react";
 import { HiCog, HiCurrencyDollar, HiLogout, HiViewGrid } from "react-icons/hi";
 import { useAuth } from "../../Contexts/AuthContext";
 import { urlImg } from "../../function/UrlImg";
+import Cookies from "universal-cookie";
 function Navbar() {
     const [toggleNav, setToggleNav] = useState(window.location.pathname);
     const [userData, setUserData] = useState(null);
     const userAuth = useAuth()
+    const cookies = new Cookies()
     const navigate = useNavigate()
 
     async function fetchData() {
         try {
             fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: { 'content-type': 'application/json', 'authorization': `Bearer ${userAuth.token}` }
             })
                 .then((res) => {
                     return res.json()
@@ -36,7 +38,9 @@ function Navbar() {
     // console.log(user);
     function logout(e) {
         userAuth.setIsLoggedIn(false)
+        cookies.set('isloggedin', false, { path: '/' })
         userAuth.setAuthUser(null)
+        cookies.set('token', null, { path: '/' })
     }
     return (
         <div className="container bg-zinc-800 fixed top-0 z-50">

@@ -31,7 +31,7 @@ const ModalPic = (prop) => {
                 await fetch(process.env.REACT_APP_API_URL + 'users/updatePic/' + userAuth.authUser.id, {
                     method: 'PUT',
                     headers: {
-                        "Accept": "application/json",
+                        "Accept": "application/json", 'Authorization': `Bearer ${useAuth.token}` 
                     },
                     body: formData
                 })
@@ -57,7 +57,7 @@ const ModalPic = (prop) => {
                 await fetch(process.env.REACT_APP_API_URL + 'users/updateCoverPhoto/' + userAuth.authUser.id, {
                     method: 'PUT',
                     headers: {
-                        "Accept": "application/json",
+                        "Accept": "application/json", 'authorization': `Bearer ${userAuth.token}` 
                     },
                     body: formData
                 })

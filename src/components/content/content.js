@@ -17,7 +17,10 @@ function Content() {
         try {
             await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${userAuth.token}`
+                }
             })
                 .then((res) => {
                     return res.json()
@@ -35,7 +38,10 @@ function Content() {
         try {
             SetPostList(await fetch(process.env.REACT_APP_API_URL + 'posts/', {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${userAuth.token}`
+                }
             })
                 .then((res) => {
                     return res.json()

@@ -7,6 +7,8 @@ import { TextField } from '@mui/material';
 import EmojiPicker from 'emoji-picker-react';
 import photo from '../../../assets/Ivw7nhRtXyo.png'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../Contexts/AuthContext';
+
 
 
 function Posts(prop) {
@@ -14,6 +16,7 @@ function Posts(prop) {
     const [toggleEmojo, setToggleEmojo] = useState(false);
     const navigate = useNavigate();
     const modelRef = useRef()
+    const userAuth = useAuth();
 
     useEffect(() => {
         const handdleClickOutside = (e) => {
@@ -39,7 +42,7 @@ function Posts(prop) {
         try {
             fetch(process.env.REACT_APP_API_URL + 'posts/', {
                 method: 'POST',
-                headers: { 'content-type': 'application/json' },
+                headers: { 'content-type': 'application/json', 'authorization': `Bearer ${userAuth.token}`  },
                 body: JSON.stringify(formData)
             }).then((res) => {
                 return res.json()

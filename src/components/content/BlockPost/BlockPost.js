@@ -34,7 +34,7 @@ function BlockPost(props) {
     function deletePost() {
         try {
             fetch(process.env.REACT_APP_API_URL + "posts/delete/" + props.post._id, {
-                method: "DELETE"
+                method: "DELETE", headers: { 'Authorization':`Bearer ${userAuth.token}`  }
             }).then((res) => {
                 if (res.status === 200) {
                     setDeleted(true)
@@ -53,7 +53,7 @@ function BlockPost(props) {
         try {
             setUser(await fetch(process.env.REACT_APP_API_URL + 'users/finduserpost/' + id, {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: { 'content-type': 'application/json', 'authorization': `Bearer ${userAuth.token}`  }
             })
                 .then(async (res) => {
                     return res.json()

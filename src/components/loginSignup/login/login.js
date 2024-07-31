@@ -1,20 +1,22 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../../Contexts/AuthContext"
 import { useEffect, useState } from "react"
-import bcrypt from "bcryptjs"
 import Cookies from "universal-cookie"
+import { decodeToken } from "react-jwt"
+
 
 function Login() {
   const cookies = new Cookies()
   const navigate = useNavigate()
   const [emailError, setEmailError] = useState(false)
   const {
+    setToken,
     setAuthUser,
     setIsLoggedIn
   } = useAuth()
-  useEffect(()=>{
+  useEffect(() => {
     document.title = "Login"
-  },[])
+  }, [])
   async function login(e) {
     e.preventDefault()
     try {
@@ -29,38 +31,53 @@ function Login() {
       }).then((res) => {
         if (res.status === 200) {
           setEmailError(false)
-        } else if (res.status === 404) {
+        } else if (res.status === 400) {
           setEmailError(true)
         }
         return res.json()
-      }).then((data) => {
-        bcrypt.compare(body.password, data.password, async (err, isMatch) => {
-          if (err) {
-            console.log(err);
-          } else if (!isMatch) {
-            setEmailError(true)
-          } else {
-            setEmailError(false)
-            try {
-              let res = await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + data._id, {
-                method: 'GET',
-                headers: { 'content-type': 'application/json' },
-              }).then((res) => { return res.json() }).then((data) => { return data })
-              // navigate('/')
-              console.log(res);
-              setIsLoggedIn(true)
-              setAuthUser({
-                id: res._id,
-                Name: res.userName
-            })
-              cookies.set('isloggedin', true, { path: '/' })
-              cookies.set('_id', { id: res._id, Name: res.userName }, { path: '/' })
-            }
-            catch (err) {
-              console.log('status err: ' + err);
-            }
-          }
+      }).then((token) => {
+        fetch(process.env.REACT_APP_API_URL + 'auth/', {
+          method: 'GET',
+          headers: { 'content-type': 'application/json', 'authorization': `Bearer ${token}` }
         })
+        cookies.set('token', token, { path: '/' })
+        //decode token
+        const user = decodeToken(token)
+        cookies.set('isloggedin', true, { path: '/' })
+        setToken(token)
+        setIsLoggedIn(true)
+        setAuthUser({
+          id: user.id,
+          Name: user.username
+        })
+        // console.log(user);
+        // bcrypt.compare(body.password, data.password, async (err, isMatch) => {
+        //   if (err) {
+        //     console.log(err);
+        //   } else if (!isMatch) {
+        //     setEmailError(true)
+        //   } else {
+        //     setEmailError(false)
+        //     try {
+        //       let res = await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + data._id, {
+        //         method: 'GET',
+        //         headers: { 'content-type': 'application/json' },
+        //       }).then((res) => { return res.json() }).then((data) => { return data })
+        //       // navigate('/')
+        //       console.log(res);
+        //       setIsLoggedIn(true)
+        //       setAuthUser({
+        //         id: res._id,
+        //         Name: res.userName
+        //     })
+        //       cookies.set('isloggedin', true, { path: '/' })
+        //       cookies.set('_id', { id: res._id, Name: res.userName }, { path: '/' })
+        //     }
+        //     catch (err) {
+        //       console.log('status err: ' + err);
+        //     }
+        //   }
+        // })
       }).catch((err) => console.log(err))
 
 

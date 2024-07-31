@@ -12,6 +12,7 @@ function Navbar_Setting() {
                 method: 'GET',
                 headers: {
                     "Accept": "application/json",
+                    'Authorization': `Bearer ${useAuth.token}` 
                 }
             }).then((res) => { return res.json() })
                 .then((data) => {
@@ -32,8 +33,8 @@ function Navbar_Setting() {
         <>
 
 
-                </>
+        </>
     )
 }
 
-            export default Navbar_Setting
+export default Navbar_Setting

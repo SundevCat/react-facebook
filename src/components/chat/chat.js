@@ -16,11 +16,13 @@ function Chat() {
     const [ready, setReady] = useState(false)
 
     async function fetchData() {
-
         try {
             await fetch(process.env.REACT_APP_API_URL + 'users/', {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${userAuth.token}` 
+                }
             })
                 .then((res) => res.json())
                 .then((data) => {

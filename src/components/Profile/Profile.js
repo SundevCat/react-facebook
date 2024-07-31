@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../Contexts/AuthContext'
 import EditIcon from '@mui/icons-material/Edit';
 import ModalPic from './ModalPic/ModalPic';
-import {  urlImg } from '../../function/UrlImg';
+import { urlImg } from '../../function/UrlImg';
 
 function Profile() {
   const userAuth = useAuth()
@@ -18,7 +18,7 @@ function Profile() {
       fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
         method: 'GET',
         headers: {
-          "Accept": "application/json",
+          "Accept": "application/json", 'authorization': `Bearer ${userAuth.token}` 
         }
       }).then((res) => { return res.json() }).then((data) => {
         setUserData(data)
@@ -77,7 +77,10 @@ function Profile() {
           <div className='flex justify-center '>
             <div className=' relative'>
               <div className='h-[65dvh]'>
-                <img className='w-[1092px] h-full object-cover rounded-b-md ' alt='banner'   src={urlImg(userData.cover_photo)} ></img>
+                {userData.cover_photo ? <img className='w-[1092px] h-full object-cover rounded-b-md ' alt='banner' src={urlImg(userData.cover_photo)} ></img>
+                  :
+                  <div className='w-[1092px] h-full object-cover rounded-b-md bg-slate-500' ></div>}
+
                 <div className='w-[95%] m-auto text-white flex justify-between' >
                   <div className='flex flex-row'>
                     <img className='rounded-full w-44 h-44 -mt-10 border-4 border-zinc-900 object-cover' src={urlImg(userData.image)} />
@@ -97,7 +100,7 @@ function Profile() {
           </div>
           <div className='h-[35dvh]'>
           </div>
-          <ModalPic setOpenEditProfile={setOpenEditProfile} openEditProfile={openEditProfile} img={imgProfile} coverImage={coverImage}/>
+          <ModalPic setOpenEditProfile={setOpenEditProfile} openEditProfile={openEditProfile} img={imgProfile} coverImage={coverImage} />
         </div>
       }
     </>

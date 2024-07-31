@@ -33,7 +33,7 @@ function Menu() {
         try {
             await fetch(process.env.REACT_APP_API_URL + 'users/finduser/' + userAuth.authUser.id, {
                 method: 'GET',
-                headers: { 'content-type': 'application/json' }
+                headers: { 'content-type': 'application/json', 'authorization':`Bearer ${userAuth.token}`  }
             })
                 .then((res) => {
                     return res.json()
@@ -59,7 +59,8 @@ function Menu() {
                         {userData ? <img alt="" className="  w-9 h-9  rounded-full object-cover " src={urlImg(userData.image)} /> : ''}
 
                     </div>
-                    <div className="px-4 text-white text-sm"> {userAuth.authUser.Name}</div>
+                    {userAuth.authUser != null && <div className="px-4 text-white text-sm"> {userAuth.authUser.Name}</div>}
+
                 </Link>
                 <Link to={'/'} id="border" className={'p-2 mx-2 my-1 ms:mx-7 flex h-full items-center cursor-pointer hover:bg-zinc-700 hover:rounded-md'}>
                     <img alt="" className="w-8 h-8" src={Friend} />

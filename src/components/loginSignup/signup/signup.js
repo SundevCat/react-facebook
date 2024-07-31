@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import bcrypt from "bcryptjs"
 import Cookies from "universal-cookie";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { decodeToken } from "react-jwt";
 
 function Signup() {
     const navigate = useNavigate();
@@ -18,13 +19,14 @@ function Signup() {
     const [currentYear, setCurrentYear] = useState(date.getFullYear());
     const [customGenders, setCustomGenders] = useState(null);
     const {
+        setToken,
         setAuthUser,
         setIsLoggedIn
     } = useAuth()
 
-    useEffect(()=>{
+    useEffect(() => {
         document.title = "signup"
-      },[])
+    }, [])
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -68,27 +70,41 @@ function Signup() {
         if (Object.keys(validationErrors).length === 0) {
             try {
                 inputValue.password = bcrypt.hashSync(e.target.password.value, 10)
-                let res = await fetch(process.env.REACT_APP_API_URL + 'users/register', {
+                let token = await fetch(process.env.REACT_APP_API_URL + 'users/register', {
                     method: 'POST',
                     headers: { 'content-type': 'application/json' },
                     body: JSON.stringify(inputValue)
-                }).then((res) => { return res.json() }).then((data) => { return data })
-                console.log(res);
-                if (res.length !== 1) {
+                }).then((res) => {
+                    if (res.status === 409) {
+                        validationErrors.userEmail = "อีเมลนี้ถูกใช้แล้ว"
+                    } else {
+                        return res.json()
+                    }
+                }).then((data) => {
+                    return data
+                })
+                if (token) {
+                    fetch(process.env.REACT_APP_API_URL + 'auth/', {
+                        method: 'GET',
+                        headers: { 'content-type': 'application/json', 'authorization': `Bearer ${token}` }
+                    })
+                    const user = decodeToken(token)
+                    setToken(token)
                     setIsLoggedIn(true)
                     setStatusRegis(true)
                     setAuthUser({
-                        id: res._id,
-                        Name: res.userName
+                        id: user.id,
+                        Name: user.username
                     })
+                    cookies.set('token', token, { path: '/' })
                     cookies.set('isloggedin', true, { path: '/' })
-                    cookies.set('_id', { id: res._id, Name: res.userName }, { path: '/' })
+                    cookies.set('_id', user, { path: '/' })
                     setTimeout(() => {
                         navigate('/')
                     }, 2000)
-                } else {
-                    validationErrors.userEmail = "อีเมลนี้ถูกใช้แล้ว"
+
                 }
+
             } catch (err) {
                 console.log(err);
             }
